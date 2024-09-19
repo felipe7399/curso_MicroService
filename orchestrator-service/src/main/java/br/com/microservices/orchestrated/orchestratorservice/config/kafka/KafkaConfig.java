@@ -1,7 +1,9 @@
 package br.com.microservices.orchestrated.orchestratorservice.config.kafka;
 
 
+import br.com.microservices.orchestrated.orchestratorservice.core.ETopic;
 import lombok.RequiredArgsConstructor;
+import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.*;
 
 import java.util.HashMap;
@@ -27,6 +30,9 @@ public class KafkaConfig {
 
     @Value("${spring.kafka.consumer.auto-offset-reset}")
     private String autoOffsetReset;
+
+    private static final Integer PARTITIONS = 1;
+    private static final Integer REPLICAS = 1;
 
     @Bean
     public ConsumerFactory<String, String> consumerFactory () {
@@ -64,5 +70,78 @@ public class KafkaConfig {
     @Bean
     public KafkaTemplate<String, String> kafkaTemplate (ProducerFactory<String,String> producerFactory) {
         return new KafkaTemplate<>(producerFactory);
+    }
+
+    private NewTopic buildtopic (String name) {
+
+        return TopicBuilder.name(name)
+                .partitions(PARTITIONS)
+                .replicas(REPLICAS)
+                .build();
+    }
+
+    @Bean
+    public NewTopic createStartSagaTopic() {
+
+        return buildtopic(ETopic.START_SAGA.getTopic());
+    }
+
+    @Bean
+    public NewTopic createBaseOrchestratorTopic() {
+
+        return buildtopic(ETopic.BASE_ORCHESTRATOR.getTopic());
+    }
+
+    @Bean
+    public NewTopic createFinishSuccessTopic() {
+
+        return buildtopic(ETopic.FINISH_SUCCESS.getTopic());
+    }
+
+    @Bean
+    public NewTopic createFinishFailTopic() {
+
+        return buildtopic(ETopic.FINISH_FAIL.getTopic());
+    }
+
+    @Bean
+    public NewTopic createNotifyEndingTopic() {
+
+        return buildtopic(ETopic.NOTIFY_ENDING.getTopic());
+    }
+
+    @Bean
+    public NewTopic createProductValidationSuccessTopic() {
+
+        return buildtopic(ETopic.PRODUCT_VALIDATION_SUCCESS.getTopic());
+    }
+    @Bean
+    public NewTopic createProductValidationFailTopic() {
+
+        return buildtopic(ETopic.PRODUCT_VALIDATION_FAIL.getTopic());
+    }
+
+    @Bean
+    public NewTopic createPaymentSuccessTopic() {
+
+        return buildtopic(ETopic.PAYMENT_SUCCESS.getTopic());
+    }
+
+    @Bean
+    public NewTopic createPaymentFailTopic() {
+
+        return buildtopic(ETopic.PAYMENT_FAIL.getTopic());
+    }
+
+    @Bean
+    public NewTopic createInventorySuccessTopic() {
+
+        return buildtopic(ETopic.INVENTORY_SUCCESS.getTopic());
+    }
+
+    @Bean
+    public NewTopic createInventorytFailTopic() {
+
+        return buildtopic(ETopic.INVENTORY_FAIL.getTopic());
     }
 }

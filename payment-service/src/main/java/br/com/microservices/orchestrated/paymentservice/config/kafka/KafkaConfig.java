@@ -2,6 +2,7 @@ package br.com.microservices.orchestrated.paymentservice.config.kafka;
 
 
 import lombok.RequiredArgsConstructor;
+import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.*;
 
 import java.util.HashMap;
@@ -27,6 +29,17 @@ public class KafkaConfig {
 
     @Value("${spring.kafka.consumer.auto-offset-reset}")
     private String autoOffsetReset;
+
+    @Value("${spring.kafka.topic.orchestrator}")
+    private String orchestrator;
+
+    @Value("${spring.kafka.topic.payment-fail}")
+    private String paymentFail;
+
+    @Value("${spring.kafka.topic.payment-success}")
+    private String paymentSuccess;
+    private static final Integer PARTITIONS = 1;
+    private static final Integer REPLICAS = 1;
 
     @Bean
     public ConsumerFactory<String, String> consumerFactory () {
@@ -64,5 +77,31 @@ public class KafkaConfig {
     @Bean
     public KafkaTemplate<String, String> kafkaTemplate (ProducerFactory<String,String> producerFactory) {
         return new KafkaTemplate<>(producerFactory);
+    }
+
+    private NewTopic buildtopic (String name) {
+
+        return TopicBuilder.name(name)
+                .partitions(PARTITIONS)
+                .replicas(REPLICAS)
+                .build();
+    }
+
+    @Bean
+    public NewTopic createPaymentFailTopic() {
+
+        return buildtopic(paymentFail);
+    }
+
+    @Bean
+    public NewTopic createOrchestratorTopic() {
+
+        return buildtopic(orchestrator);
+    }
+
+    @Bean
+    public NewTopic createPaymentSuccessTopic() {
+
+        return buildtopic(paymentSuccess);
     }
 }
