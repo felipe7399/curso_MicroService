@@ -1,7 +1,7 @@
 package br.com.microservices.orchestrated.orchestratorservice.config.kafka;
 
 
-import br.com.microservices.orchestrated.orchestratorservice.core.ETopic;
+import br.com.microservices.orchestrated.orchestratorservice.core.enums.ETopic;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
