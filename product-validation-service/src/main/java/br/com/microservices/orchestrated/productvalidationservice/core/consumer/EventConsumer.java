@@ -13,7 +13,7 @@ public class EventConsumer {
 
     private final JsonUtil jsonUtil;
 
-    @KafkaListener(groupId = "${spring.consumer.group-id}", topics = "${spring.topic.product-validation-success}")
+    @KafkaListener(groupId = "${spring.kafka.consumer.group-id}", topics = "${spring.kafka.topic.product-validation-success}")
     public void consumeproductValidationSuccess (String payload) {
         log.info("Receiving product-validation-success event{}" , payload);
         //Event event = jsonUtil.toEvent(payload);
@@ -21,7 +21,7 @@ public class EventConsumer {
         log.info("evento {} ", event.toString());
     }
 
-    @KafkaListener(groupId = "${spring.consumer.group-id}", topics = "${spring.topic.product-validation-fail}")
+    @KafkaListener(groupId = "${spring.kafka.consumer.group-id}", topics = "${spring.kafka.topic.product-validation-fail}")
     public void consumeproductValidationFail (String payload) {
         log.info("Receiving product-validation-fail event{}" , payload);
         //Event event = jsonUtil.toEvent(payload);

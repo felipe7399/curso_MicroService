@@ -13,7 +13,7 @@ public class EventConsumer {
 
     private final JsonUtil jsonUtil;
 
-    @KafkaListener(groupId = "${spring.consumer.group-id}", topics = "${spring.topic.payment-success}")
+    @KafkaListener(groupId = "${spring.kafka.consumer.group-id}", topics = "${spring.kafka.topic.payment-success}")
     public void consumepaymentSuccess (String payload) {
         log.info("Receiving payment-success event{}" , payload);
         //Event event = jsonUtil.toEvent(payload);
@@ -21,7 +21,7 @@ public class EventConsumer {
         log.info("evento {} ", event.toString());
     }
 
-    @KafkaListener(groupId = "${spring.consumer.group-id}", topics = "${spring.topic.payment-fail}")
+    @KafkaListener(groupId = "${spring.kafka.consumer.group-id}", topics = "${spring.kafka.topic.payment-fail}")
     public void consumepaymentFail (String payload) {
         log.info("Receiving payment-fail event{}" , payload);
         //Event event = jsonUtil.toEvent(payload);
