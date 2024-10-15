@@ -1,5 +1,6 @@
 package br.com.microservices.orchestrated.orchestratorservice.core.consumer;
 
+import br.com.microservices.orchestrated.orchestratorservice.core.dto.Event;
 import br.com.microservices.orchestrated.orchestratorservice.core.utils.JsonUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +17,8 @@ public class EventConsumer {
     @KafkaListener(groupId = "${spring.kafka.consumer.group-id}", topics = "${spring.kafka.topic.start-saga}" )
     public void consumeStartSaga (String payload) {
         log.info("Receiving start-saga event{}" , payload);
-        //Event event = jsonUtil.toEvent(payload);
-        var event = jsonUtil.toEvent(payload);
+        Event event = jsonUtil.toEvent(payload);
+        //var event = jsonUtil.toEvent(payload);
         log.info("evento {} ", event.toString());
 
     }
