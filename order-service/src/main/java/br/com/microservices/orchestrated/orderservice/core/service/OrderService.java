@@ -26,7 +26,9 @@ public class OrderService {
     private static final String TRANSACTION_ID_PATTERN = "%S_%S";
 
     public Order createOrder (OrderRequest orderRequest) {
-        Order order = Order.builder().products(orderRequest.getProducts()).createdAt(LocalDateTime.now()).transactionId(
+        Order order = Order.builder()
+                .products(orderRequest.getProducts())
+                .createdAt(LocalDateTime.now()).transactionId(
                 String.format(TRANSACTION_ID_PATTERN, Instant.now().toEpochMilli() , UUID.randomUUID())
         ).build();
         repository.save(order);
