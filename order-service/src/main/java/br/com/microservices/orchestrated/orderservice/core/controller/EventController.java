@@ -20,7 +20,7 @@ public class EventController {
     private EventService eventService;
 
     @GetMapping("/findByFilter")
-    public ResponseEntity<Event> findByFilter (@RequestBody EventFilter eventFilter) {
+    public ResponseEntity<Event> findByFilter (EventFilter eventFilter) {
         return ResponseEntity.ok(eventService.findByFilter(eventFilter));
     }
 

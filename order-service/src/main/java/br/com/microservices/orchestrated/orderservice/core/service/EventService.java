@@ -36,7 +36,7 @@ public class EventService {
 
     public Event findByFilter (EventFilter eventFilter) {
         validateEmptyFilters(eventFilter);
-        if (!eventFilter.getTransactionId().isEmpty()) {
+        if (eventFilter.getTransactionId() != null && !eventFilter.getTransactionId().isEmpty()) {
             return eventRepository.findById(eventFilter.getTransactionId()).orElseThrow(() -> new ValidationException("Event not found by Transaction ID"));
         }
         else {
@@ -46,7 +46,8 @@ public class EventService {
     }
 
     private void validateEmptyFilters(EventFilter eventFilter) {
-        if (eventFilter.getOrderId().isEmpty() && eventFilter.getTransactionId().isEmpty()){
+        if ((eventFilter.getOrderId() == null || eventFilter.getOrderId().isEmpty())
+                && (eventFilter.getTransactionId() == null || eventFilter.getTransactionId().isEmpty())){
            throw new ValidationException("Filters empty");
         }
     }
