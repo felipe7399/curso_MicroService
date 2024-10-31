@@ -7,7 +7,7 @@ threads = []
 def build_application(app):
     threads.append(app)
     print("Building application {}".format(app))
-    os.system("cd {} && gradle build -x test".format(app))
+    os.system("cd {} && gradlew build -x test".format(app))
     print("Application {} finished building!".format(app))
     threads.remove(app)
 
@@ -35,7 +35,7 @@ def build_all_applications():
 def remove_remaining_containers():
     print("Removing all containers.")
     os.system("docker-compose down")
-    containers = os.popen('docker ps -aq').read().split('\n')
+    containers = os.popen('docker-compose ps -aq').read().split('\n')
     containers.remove('')
     if len(containers) > 0:
         print("There are still {} containers created".format(containers))
