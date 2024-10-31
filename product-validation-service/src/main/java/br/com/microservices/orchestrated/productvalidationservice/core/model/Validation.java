@@ -1,0 +1,46 @@
+package br.com.microservices.orchestrated.productvalidationservice.core.model;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
+
+import java.time.LocalDateTime;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
+@Entity
+@Table(name = "validation")
+public class Validation {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @Column(nullable = false)
+    private String orderId;
+    @Column(nullable = false)
+    private String transactionId;
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    public void prePersist () {
+        LocalDateTime now = LocalDateTime.now();
+        this.updatedAt = now;
+        this.createdAt = now;
+
+    }
+
+    @PreUpdate
+    public void preUpdate () {
+        this.updatedAt = LocalDateTime.now();
+    }
+
+
+}
