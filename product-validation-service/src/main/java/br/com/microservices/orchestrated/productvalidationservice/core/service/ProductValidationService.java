@@ -11,12 +11,9 @@ import br.com.microservices.orchestrated.productvalidationservice.core.repositor
 import br.com.microservices.orchestrated.productvalidationservice.core.utils.JsonUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 @Slf4j
@@ -27,7 +24,6 @@ public class ProductValidationService {
 
     private final ProductRepository productRepository;
     private final JsonUtil jsonUtil;
-    private final KafkaTemplate<String,String> kafkaTemplate;
     private final ValidationRepository validationRepository;
     private final KafkaProducer kafkaProducer;
 
