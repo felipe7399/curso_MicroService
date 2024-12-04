@@ -49,7 +49,9 @@ public class Payment {
 
         this.createdAt = LocalDateTime.now();
         this.updateddAt = LocalDateTime.now();
-        this.paymentStatus = EPaymentStatus.PENDING;
+        if (this.paymentStatus == null) {
+            this.paymentStatus = EPaymentStatus.PENDING;
+        }
     }
 
     @PreUpdate
