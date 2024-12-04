@@ -48,14 +48,11 @@ public class PaymentService {
     }
 
     public void performRollback (Event event) {
-        paymentRepository.findByOrderIdAndTransactionId(event.getOrderId(), event.getTransactionId())
-                .ifPresentOrElse(payment -> {
-                            payment.setPaymentStatus(EPaymentStatus.DENIED);
-                            paymentRepository.save(payment);
-                        },
-                        () -> createDeniedPayment(event) );
+
         event.setStatus(ESagaStatus.FAIL);
         event.setSource(CURRENT_SOURCE);
+        paymentRepository.findByOrderIdAndTransactionId(event.getOrderId(), event.getTransactionId())
+                .orElseThrow(() -> new ValidationException("Payment Does not exist in database"));
         event.addHistory(History.builder()
                 .source(CURRENT_SOURCE)
                 .status(ESagaStatus.FAIL)
