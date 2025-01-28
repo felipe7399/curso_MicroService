@@ -1,8 +1,8 @@
 package br.com.microservices.orchestrated.paymentservice.core.service;
 
 import br.com.microservices.orchestrated.paymentservice.config.exceptions.ValidationException;
-import br.com.microservices.orchestrated.paymentservice.core.Payment;
-import br.com.microservices.orchestrated.paymentservice.core.PaymentRepository;
+import br.com.microservices.orchestrated.paymentservice.core.model.Payment;
+import br.com.microservices.orchestrated.paymentservice.core.trpository.PaymentRepository;
 import br.com.microservices.orchestrated.paymentservice.core.dto.Event;
 import br.com.microservices.orchestrated.paymentservice.core.dto.History;
 import br.com.microservices.orchestrated.paymentservice.core.dto.OrderProducts;
