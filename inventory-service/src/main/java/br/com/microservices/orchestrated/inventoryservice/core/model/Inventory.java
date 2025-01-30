@@ -19,10 +19,10 @@ public class Inventory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer ID;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "productCode")
     private String productCode;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "amountAvailable")
     private Integer amountAvailable;
 
 

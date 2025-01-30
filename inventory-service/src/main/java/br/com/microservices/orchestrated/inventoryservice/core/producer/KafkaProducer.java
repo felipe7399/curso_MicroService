@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class KafkaProducer {
 
-private KafkaTemplate<String,String> kafkaTemplate;
+private final KafkaTemplate<String,String> kafkaTemplate;
 
 @Value("${spring.kafka.topic.orchestrator}")
 private String topic;
